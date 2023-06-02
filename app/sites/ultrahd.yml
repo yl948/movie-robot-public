@@ -1,46 +1,41 @@
-id: eastgame
-name: 吐鲁番
-domain: https://pt.eastgame.org/
+id: ultrahd
+name: ultrahd
+domain: https://ultrahd.net/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/eastgame.yml
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ultrahd.yml
 
 login:
   test:
     selector: a[href="logout.php"]
 
 category_mappings:
-  - { id: 438, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/电影" }
-  - { id: 440, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series/剧集" }
-  - { id: 441, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows/综艺" }
-  - { id: 442, cate_level1: Anime , cate_level2: TV/Anime, cate_level2_desc: "Animations/动漫" }
-  - { id: 443, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentaries/纪录片" }
-  - { id: 444, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports/运体" }
-  - { id: 445, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "MusicVideo/音乐MV" }
-  - { id: 446, cate_level1: Music, cate_level2: Audio,cate_level2_ desc: "HQ Audio/无损音乐" }
-  - { id: 447, cate_level1: Game, cate_level2: PC/Game,cate_level2_ desc: "Game/游戏" }
-  - { id: 448, cate_level1: Other, cate_level2: PC/Software,cate_level2_ desc: "Software/软件" }
-  - { id: 449, cate_level1: Other, cate_level2: Other,cate_level2_ desc: "Other/资料" }
-  - { id: 450, cate_level1: Other, cate_level2: Other,cate_level2_ desc: "Misc/其他" }
+  - { id: 401, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series" }
+  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentaries" }
+  - { id: 405, cate_level1: Anime , cate_level2: TV/Anime, cate_level2_desc: "Animations" }
+  - { id: 416, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "Music Video" }
+  - { id: 417, cate_level1: Other, cate_level2: Other, cate_level2_desc: "Others" }
 
 userinfo:
-  path: https://pt.eastgame.org/index.php
+  path: https://ultrahd.net/index.php
   item:
     selector: table[id="info_block"]
   fields:
     uid:
       default_value: 0
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="https://ultrahd.net/userdetails.php?id="]
       attribute: href
       filters:
         - name: re_search
           args: [ '\d+', 0 ]
     user_group:
       default_value: ''
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="https://ultrahd.net/userdetails.php?id="]
       attribute: class
     username:
       default_value: '未知用户名'
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="https://ultrahd.net/userdetails.php?id="]
     share_ratio:
       default_value: ''
       selector: font[class="color_ratio"]
@@ -88,7 +83,8 @@ search:
     # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
     search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
     # 0 AND, 1 OR, 2 exact
-    search_mode: 0
+    search_mode: 2
+    # 0 AND, 2 ACCURACY
     sort: "{{ query.sort }}"
     type: "{{ query.type }}"
     page: "{{ query.page }}"
@@ -180,3 +176,11 @@ torrents:
     description:
       selector: td:nth-child(2) > table > tr > td.embedded
       contents: -1
+    minimumratio:
+      case:
+        img.hitandrun: 3
+        "*": 0
+    minimumseedtime:
+      case:
+        img.hitandrun: 1209600
+        "*": 0

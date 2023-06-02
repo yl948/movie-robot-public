@@ -6,7 +6,7 @@ config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: div[class="m_nav"]
 
 category_mappings:
   - {id: 401, cate_level1: Movie, cate_level2: Movies, desc: "Movies/电影"}
@@ -23,7 +23,7 @@ category_mappings:
 userinfo:
   path: https://sharkpt.net/index.php
   item:
-    selector: table[id="info_block"]
+    selector: div[class="m_nav"]
   fields:
     uid:
       default_value: 0
@@ -40,34 +40,29 @@ userinfo:
       default_value: '未知用户名'
       selector: a[href^="https://sharkpt.net/userdetails.php?id="]
     share_ratio:
-      default_value: ''
-      selector: font[class="color_ratio"]
-      method: next_sibling
+      default_value: 0
+      selector: span[class="share_ratio"]
       filters:
         - name: replace
           args: [ '无限','inf' ]
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
-      method: next_sibling
+      selector: span[class="uploaded"]
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
-      method: next_sibling
+      selector: span[class="downloaded"]
       filters:
         - name: replace
           args: [ '无限','inf' ]
     seeding:
       default_value: 0
-      selector: img[alt="Torrents seeding"]
-      method: next_sibling
+      selector: span[class="seeding"]
     leeching:
       default_value: 0
-      selector: img[alt="Torrents leeching"]
-      method: next_sibling
+      selector: span[class="leeching"]
     vip_group:
       case:
         a[class^="VIP"]: true
@@ -94,7 +89,7 @@ search:
 
 torrents:
   list:
-    selector: table.torrents > tr:has(table.torrentname)
+    selector: table.torrents > tr:has(table)
   fields:
     id:
       selector: a[href^="details.php?id="]
@@ -186,7 +181,7 @@ torrents:
       remove: a,img,div,span,font,b
     description:
       text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %} {% if fields['checked'] %}❓{% else %}✅{% endif %}"
-    minimumratio: 
+    minimumratio:
       case:
         img.hitandrun: 1
         "*": 0

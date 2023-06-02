@@ -6,7 +6,7 @@ config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: a[href^="userdetails.php"]
 
 category_mappings:
     - {id: 401, cate_level1: Movie, cate_level2: 电影, cate_level2_desc: "电影"}
@@ -45,14 +45,14 @@ userinfo:
       text: 0
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
+      selector: span[class="color_uploaded"]
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
+      selector: span[class="color_downloaded"]
       method: next_sibling
       filters:
         - name: replace
